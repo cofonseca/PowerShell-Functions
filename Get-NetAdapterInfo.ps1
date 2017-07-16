@@ -22,7 +22,7 @@
 function Get-NetAdapterInfo {
     [CmdletBinding()]
     param (
-        [Parameter(ValueFromPipeline=$True)][string]$ComputerName
+        [Parameter(ValueFromPipeline=$True,Position=0)][string]$ComputerName
     )
 
     PROCESS{
@@ -30,7 +30,7 @@ function Get-NetAdapterInfo {
         if ($ComputerName) {
             Invoke-Command -ComputerName $ComputerName -ScriptBlock {
                 $IPAddresses = Get-NetIPAddress | 
-                where {$_.IPAddress -and $_.IPAddress -notmatch '127.0.0.1' -and $_.IPAddress -notmatch ':' -and $_.IPAddress -notmatch '169.254' -and $_.InterfaceAlias -notmatch 'Bluetooth' -and $_.InterfaceAlias -notmatch 'Tunnel' -and $_.InterfaceAlias -notmatch 'isatap'}
+                Where-Object {$_.IPAddress -and $_.IPAddress -notmatch '127.0.0.1' -and $_.IPAddress -notmatch ':' -and $_.IPAddress -notmatch '169.254' -and $_.InterfaceAlias -notmatch 'Bluetooth' -and $_.InterfaceAlias -notmatch 'Tunnel' -and $_.InterfaceAlias -notmatch 'isatap'}
 
                 [PSObject[]]$OutputObject = New-Object -TypeName psobject
 
@@ -49,7 +49,7 @@ function Get-NetAdapterInfo {
         } else {
 
             $IPAddresses = Get-NetIPAddress | 
-            where {$_.IPAddress -and $_.IPAddress -notmatch '127.0.0.1' -and $_.IPAddress -notmatch ':' -and $_.IPAddress -notmatch '169.254' -and $_.InterfaceAlias -notmatch 'Bluetooth' -and $_.InterfaceAlias -notmatch 'Tunnel' -and $_.InterfaceAlias -notmatch 'isatap'}
+            Where-Object {$_.IPAddress -and $_.IPAddress -notmatch '127.0.0.1' -and $_.IPAddress -notmatch ':' -and $_.IPAddress -notmatch '169.254' -and $_.InterfaceAlias -notmatch 'Bluetooth' -and $_.InterfaceAlias -notmatch 'Tunnel' -and $_.InterfaceAlias -notmatch 'isatap'}
 
             [PSObject[]]$OutputObject = New-Object -TypeName psobject
 

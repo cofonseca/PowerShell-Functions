@@ -20,7 +20,7 @@
 function Get-DotNetVersion {
     [CmdletBinding()]
     param(
-        [Parameter(ValueFromPipeline=$True)][string]$ComputerName
+        [Parameter(ValueFromPipeline=$True,Position=0)][string]$ComputerName
     )
 
     BEGIN {
